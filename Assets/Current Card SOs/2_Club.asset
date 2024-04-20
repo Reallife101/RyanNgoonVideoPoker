@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffd663d005026b347a7a59f2f3405a7d, type: 3}
-  m_Name: 9_Club
+  m_Name: 2_Club
   m_EditorClassIdentifier: 
   isRoyal: 0
   suit: 1
-  value: 9
+  value: 2
   img: {fileID: 0}

@@ -74,16 +74,6 @@ namespace VideoPoker
 
             GUILayout.Space(60); // Space below drop area
 
-            /*
-            // Image selection
-            imageName = EditorGUILayout.TextField("Image Name:", imageName);
-
-            // Load image
-            if (GUILayout.Button("Load Image"))
-            {
-                LoadImage();
-            }
-            */
             CreateDictGUI();
 
             // Display loaded image
@@ -154,8 +144,6 @@ namespace VideoPoker
             string _filename = imageSprite.name;
 
             updateSuitDict();
-
-            Debug.LogError("Images: " + imageName);
 
             // Create a new CardSO
             CardSO card = CreateInstance<CardSO>();
