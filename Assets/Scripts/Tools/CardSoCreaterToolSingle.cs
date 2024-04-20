@@ -1,15 +1,14 @@
 using System.IO;
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 
 namespace VideoPoker
 {
+    using UnityEngine;
+    using UnityEditor;
 
-    public class CardSOCreaterTool : EditorWindow
+    public class CardSOCreaterToolSingle : EditorWindow
     {
-        private string folderName = "";
-        private List<Sprite> imageSprites = new List<Sprite>();
+        private string imageName = "";
 
         private Dictionary<string, Suit> suitDictionary = new Dictionary<string, Suit>()
         {
@@ -22,14 +21,15 @@ namespace VideoPoker
         private string[] suitNames;
 
         private int dictLength = 1;
-        private string[] imageFiles;
+        private Sprite imageSprite;
         private List<int> selectedSuitIndexList = new List<int>();
         private List<string> selectedKeyList = new List<string>();
+        private bool isDragging = false;
 
-        [MenuItem("Tools/Create CardSO")]
+        [MenuItem("Tools/Create CardSO Single")]
         public static void ShowWindow()
         {
-            EditorWindow.GetWindow(typeof(CardSOCreaterTool));
+            EditorWindow.GetWindow(typeof(CardSOCreaterToolSingle));
         }
         private void OnEnable()
         {
@@ -38,48 +38,70 @@ namespace VideoPoker
 
         private void OnGUI()
         {
-            GUILayout.Label("Create CardSO", EditorStyles.boldLabel);
+            GUILayout.Label("Create CardSO Single", EditorStyles.boldLabel);
 
-            // Image selection drop-down
-            folderName = EditorGUILayout.TextField("Folder Name:", folderName);
+            Event evt = Event.current;
+            Rect dropArea = GUILayoutUtility.GetRect(0.0f, 50.0f, GUILayout.ExpandWidth(true));
+            GUI.Box(dropArea, "Drop Image Here");
+
+            switch (evt.type)
+            {
+                case EventType.DragUpdated:
+                case EventType.DragPerform:
+                    if (!dropArea.Contains(evt.mousePosition))
+                        break;
+
+                    DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
+
+                    if (evt.type == EventType.DragPerform)
+                    {
+                        DragAndDrop.AcceptDrag();
+
+                        foreach (Object draggedObject in DragAndDrop.objectReferences)
+                        {
+                            if (draggedObject is Texture2D)
+                            {
+                                Texture2D texture = draggedObject as Texture2D;
+                                imageSprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);
+                                imageSprite.name = texture.name;
+                                break;
+                            }
+                        }
+                        isDragging = false;
+                    }
+                    break;
+            }
+
+            GUILayout.Space(60); // Space below drop area
+
+            /*
+            // Image selection
+            imageName = EditorGUILayout.TextField("Image Name:", imageName);
 
             // Load image
-            if (GUILayout.Button("Load Folder"))
+            if (GUILayout.Button("Load Image"))
             {
-                LoadFolder();
-            }
-
-            CreateDictGUI();
-
-            // Display loaded image [come back to this later for better tool]
-            /*
-            if (imageSprite != null)
-            {
-                GUILayout.Label("Image Loaded:", EditorStyles.boldLabel);
-                GUILayout.Label(imageSprite.texture, GUILayout.Width(100), GUILayout.Height(100));
+                LoadImage();
             }
             */
+            CreateDictGUI();
 
-            // Create CardSO button
-            EditorGUI.BeginDisabledGroup(imageFiles== null || imageFiles.Length <= 0);
-            if (GUILayout.Button("Create CardSOs"))
+            // Display loaded image
+            if (imageSprite != null)
             {
-                foreach (string image in imageFiles)
-                {
-                    CreateCardSO(image);
-                }
+                GUILayout.Label("Image Loaded:"+imageSprite.name, EditorStyles.boldLabel);
+                GUILayout.Label(imageSprite.texture, GUILayout.Width(100), GUILayout.Height(100));
+                
+            }
+
+            EditorGUI.BeginDisabledGroup(imageSprite == null);
+            if (GUILayout.Button("Create CardSO"))
+            {
+                CreateCardSO();
             }
 
             EditorGUI.EndDisabledGroup();
 
-            GUILayout.Label("Num Cards in Folder: " + imageFiles == null ? "0" : imageFiles.Length.ToString(), EditorStyles.boldLabel);
-
-            // Delete CardSOs button
-            GUILayout.Space(10f);
-            if (GUILayout.Button("Delete CardSOs"))
-            {
-                DeleteCardSOs();
-            }
         }
 
         private void CreateDictGUI()
@@ -126,56 +148,43 @@ namespace VideoPoker
 
         }
 
-        private void LoadFolder()
-        {
-            if (!string.IsNullOrEmpty(folderName))
-            {
-                imageFiles = Directory.GetFiles(folderName);
-                foreach (string f in imageFiles)
-                {
-                    Debug.Log(f);
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Please enter an folder name.");
-            }
-        }
-
-        private void CreateCardSO(string imageName)
+        private void CreateCardSO()
         {
             //Get File Name
-            string _filename = Path.GetFileName(imageName);
+            string _filename = imageSprite.name;
 
-            UpdateSuitNames();
+            updateSuitDict();
 
             Debug.LogError("Images: " + imageName);
 
             // Create a new CardSO
             CardSO card = CreateInstance<CardSO>();
-            card.img = Resources.Load<Sprite>(imageName);
-            if (imageFiles == null)
-            {
-                Debug.LogError("Images " + imageName + " not found!");
-                return;
-            }
+            card.img = imageSprite;
             card.value = int.Parse(_filename.Substring(_filename.Length - 2));
-            card.isRoyal = card.value>10;
+            card.isRoyal = card.value > 10;
             card.suit = suitDictionary[_filename.Substring(_filename.Length - 3, 1)];
 
             // Save the CardSO as an asset
-            string path = "Assets/Current Card SOs/" + card.value.ToString() + "_"+ card.suit.ToString() + ".asset";
+            string path = "Assets/Current Card SOs/" + card.value.ToString() + "_" + card.suit.ToString() + ".asset";
             AssetDatabase.CreateAsset(card, path);
             AssetDatabase.SaveAssets();
 
             Debug.Log("CardSO created: " + path);
 
             // Reset fields
-            folderName = "";
+            imageName = "";
+            imageSprite = null;
         }
 
-        
+
         private void UpdateSuitNames()
+        {
+            suitNames = new string[suitDictionary.Count];
+            suitDictionary.Keys.CopyTo(suitNames, 0);
+            
+        }
+
+        private void updateSuitDict()
         {
             suitDictionary = new Dictionary<string, Suit>();
 
@@ -183,26 +192,11 @@ namespace VideoPoker
             // NOTE: THIS IS SLOW. UPDATE LATER
             for (int i = 0; i < selectedKeyList.Count; i++)
             {
-                
+
                 suitDictionary[selectedKeyList[i]] = (Suit)selectedSuitIndexList[i];
             }
         }
 
-        private void DeleteCardSOs()
-        {
-            // Default path for this tool
-            string folderPath = "Assets/Current Card SOs/";
-
-            // Get all files in the folder
-            string[] files = Directory.GetFiles(folderPath);
-
-            // Loop through each file and delete it
-            foreach (string file in files)
-            {
-                File.Delete(file);
-                Debug.Log("Deleted file: " + file);
-            }
-        }
     }
 
 }
