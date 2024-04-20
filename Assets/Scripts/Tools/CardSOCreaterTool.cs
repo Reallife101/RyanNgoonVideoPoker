@@ -80,10 +80,21 @@ namespace VideoPoker
             if (imageSprites.Count > 0)
             {
                 GUILayout.Label("Images Loaded:", EditorStyles.boldLabel);
+                EditorGUILayout.BeginHorizontal();
+                int _counter = 0;
                 foreach (var sprite in imageSprites)
                 {
-                    GUILayout.Label(sprite.texture, GUILayout.Width(10), GUILayout.Height(10));
+                    GUILayout.Label(sprite.texture, GUILayout.Width(50), GUILayout.Height(50));
+                    _counter++;
+
+                    if(_counter>=8)
+                    {
+                        _counter = 0;
+                        EditorGUILayout.EndHorizontal();
+                        EditorGUILayout.BeginHorizontal();
+                    }
                 }
+                EditorGUILayout.EndHorizontal();
             }
 
             EditorGUI.BeginDisabledGroup(imageSprites.Count <= 0);
