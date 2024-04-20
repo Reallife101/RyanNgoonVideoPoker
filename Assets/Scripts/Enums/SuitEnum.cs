@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace VideoPoker
 {
-    public enum SuitEnum
+    public enum Suit
     {
         Spade,
         Club,
