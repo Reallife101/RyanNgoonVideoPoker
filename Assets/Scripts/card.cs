@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,23 +14,29 @@ namespace VideoPoker
         [SerializeField]
         private GameObject holdText = null;
 
+        private bool isHeld = false;
+
         // Initializes card from SO
         public void InitializeCard()
         {
             cardArt.sprite = currentCard.img;
             holdText.SetActive(false);
+            isHeld = false;
 
         }
 
-        public void ToggleHoldText()
+        public void ToggleHeld()
         {
+            // Reasoning: We should never hold a card and not display the text, since it is miscommunication to the player
+            isHeld = !isHeld;
             holdText.SetActive(!holdText.activeInHierarchy);
 
         }
 
-        public void SetHoldText(bool b)
+        public void SetHeld(bool b)
         {
             holdText.SetActive(b);
+            isHeld = b;
 
         }
 
@@ -52,6 +56,12 @@ namespace VideoPoker
         public void SetCurrentCard(CardSO cso)
         {
             currentCard = cso;
+        }
+
+        // Establish Getters
+        public bool IsHeld
+        {
+            get { return isHeld; }
         }
     }
 }
