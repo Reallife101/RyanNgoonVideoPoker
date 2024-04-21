@@ -31,14 +31,16 @@ namespace VideoPoker
 		{
 			deck.InitializeDeck();
 			score.InitializeScore();
-			score.SubtractBet();
-			hand.DrawHand();
+			DrawNewHand();
 		}
 
 		//-//////////////////////////////////////////////////////////////////////
 		/// 
-		void Update()
-		{
+		public void DrawNewHand()
+        {
+			score.SubtractBet();
+			hand.DrawHand(true);
+			ui.IsBetting = true;
 		}
 
 		public CardSO DrawCard()
@@ -50,7 +52,8 @@ namespace VideoPoker
         {
 			hand.DrawHand();
 			score.ScoreHand(hand.Hand);
-        }
+			ui.IsBetting = false;
+		}
 
 		public void EditScore(int delta)
         {
