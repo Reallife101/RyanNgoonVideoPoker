@@ -44,5 +44,15 @@ namespace VideoPoker
 		{
 			gameManager.BetHand();
 		}
+
+		public void SetWinText(string s)
+        {
+			winningText.text = s;
+        }
+
+		public void SetBalanceText(string s)
+		{
+			currentBalanceText.text = s;
+		}
 	}
 }

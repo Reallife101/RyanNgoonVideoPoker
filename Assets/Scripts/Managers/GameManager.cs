@@ -15,6 +15,8 @@ namespace VideoPoker
 		private HandManager hand = null;
 		[SerializeField]
 		private ScoreManager score = null;
+		[SerializeField]
+		private UIManager ui = null;
 
 		//-//////////////////////////////////////////////////////////////////////
 		/// 
@@ -54,5 +56,15 @@ namespace VideoPoker
         {
 			score.CurrentBalance += delta;
         }
+
+		public void SetWinText(string s)
+        {
+			ui.SetWinText(s);
+        }
+
+		public void SetBalanceText(string s)
+		{
+			ui.SetBalanceText(s);
+		}
 	}
 }

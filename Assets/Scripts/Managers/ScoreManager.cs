@@ -14,6 +14,10 @@ namespace VideoPoker
         [SerializeField]
         private int ScoreMultiplier = 1;
 
+        [Header("Serialized Variables")]
+        [SerializeField]
+        private GameManager gameManager = null;
+
         private int currentBalance = 200;
         private List<ScoringItem> scoringItems = null;
 
@@ -21,7 +25,13 @@ namespace VideoPoker
         public int CurrentBalance
         {
             get { return currentBalance; }
-            set { currentBalance = value; }
+            set {
+                if (currentBalance != value)
+                {
+                    currentBalance = value;
+                    OnBalanceChanged(); // Call the function when balance changes
+                }
+            }
         }
 
         public void InitializeScore()
@@ -29,11 +39,25 @@ namespace VideoPoker
             currentBalance = startBalance;
             scoringItems = new List<ScoringItem>();
             InitializeScoringItems();
+            DisplayBalance();
+            gameManager.SetWinText("Choose Cards to hold or toss!");
+
         }
 
         public void SubtractBet()
         {
-            currentBalance -= BetCost;
+            CurrentBalance -= BetCost*ScoreMultiplier;
+        }
+
+        private void OnBalanceChanged()
+        {
+            DisplayBalance();
+        }
+
+        private void DisplayBalance()
+        {
+            gameManager.SetBalanceText("Current Balance: " + currentBalance + " Credits");
+
         }
 
         void InitializeScoringItems()
@@ -77,15 +101,19 @@ namespace VideoPoker
             // Sort the values in ascending order
             _values.Sort();
 
+            string s = "No Score!";
+
             foreach (ScoringItem item in scoringItems)
             {
                 if (item.condition(_values, _suits, _valueCounts))
                 {
-                    Debug.Log("Scored " + item.points + " points for " + item.name);
-                    currentBalance += item.points * ScoreMultiplier;
+                    s = "Scored " + item.points + " points for " + item.name + "!";
+                    CurrentBalance += item.points * ScoreMultiplier;
                     break;
                 }
             }
+            
+            gameManager.SetWinText(s);
         }
 
         private bool IsRoyalFlush(List<int> values, List<Suit> suits, Dictionary<int, int> valueCounts)
