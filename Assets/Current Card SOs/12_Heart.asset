@@ -15,4 +15,4 @@ MonoBehaviour:
   isRoyal: 1
   suit: 2
   value: 12
-  img: {fileID: 0}
+  img: {fileID: 21300000, guid: 896d764f132ef43688eb605062b9ec2d, type: 3}
