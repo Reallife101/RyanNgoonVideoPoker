@@ -39,5 +39,10 @@ namespace VideoPoker
 		{
 			return deck.drawCard();
 		}
+
+		public void BetHand()
+        {
+			hand.BetHand();
+        }
 	}
 }

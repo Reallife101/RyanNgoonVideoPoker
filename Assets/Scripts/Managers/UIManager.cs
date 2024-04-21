@@ -9,6 +9,11 @@ namespace VideoPoker
 	/// 
 	public class UIManager : MonoBehaviour
 	{
+		[Header("Other Managers")]
+		[SerializeField]
+		private GameManager gameManager = null;
+
+		[Header("Serialized Fields")]
 		[SerializeField]
 		private Text currentBalanceText = null;
 
@@ -37,6 +42,7 @@ namespace VideoPoker
 		/// 
 		private void OnBetButtonPressed()
 		{
+			gameManager.BetHand();
 		}
 	}
 }

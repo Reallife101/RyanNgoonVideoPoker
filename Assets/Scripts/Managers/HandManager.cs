@@ -54,6 +54,18 @@ namespace VideoPoker
                 }
             }
         }
+
+        // Click Bet
+        public void BetHand()
+        {
+            DrawHand();
+            ScoreHand();
+        }
+
+        private void ScoreHand()
+        {
+
+        }
     }
 }
 
