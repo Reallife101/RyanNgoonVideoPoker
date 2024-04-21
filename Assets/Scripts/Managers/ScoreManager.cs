@@ -8,9 +8,11 @@ namespace VideoPoker
     {
         [Header("Hand Settings")]
         [SerializeField]
-        private int startBalance = 200;
+        private int startBalance = 40;
         [SerializeField]
-        private int BetCost = 5;
+        private int BetCost = 1;
+        [SerializeField]
+        private int ScoreMultiplier = 1;
 
         private int currentBalance = 200;
         private List<ScoringItem> scoringItems = null;
@@ -31,7 +33,7 @@ namespace VideoPoker
 
         public void SubtractBet()
         {
-            currentBalance -= startBalance;
+            currentBalance -= BetCost;
         }
 
         void InitializeScoringItems()
@@ -80,6 +82,7 @@ namespace VideoPoker
                 if (item.condition(_values, _suits, _valueCounts))
                 {
                     Debug.Log("Scored " + item.points + " points for " + item.name);
+                    currentBalance += item.points * ScoreMultiplier;
                     break;
                 }
             }

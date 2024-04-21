@@ -1906,8 +1906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65cd92f4f436aeb4ca84a7a54d5ce9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startBalance: 200
-  BetCost: 5
+  startBalance: 40
+  BetCost: 1
 --- !u!1 &1818865734
 GameObject:
   m_ObjectHideFlags: 0
