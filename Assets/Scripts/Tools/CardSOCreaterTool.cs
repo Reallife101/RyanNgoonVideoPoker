@@ -21,7 +21,7 @@ namespace VideoPoker
         private string[] suitNames;
 
         private int dictLength = 1;
-        private List<Sprite> imageSprites = new List<Sprite>();
+        private List<string> imageFilePaths = new List<string>();
         private List<int> selectedSuitIndexList = new List<int>();
         private List<string> selectedKeyList = new List<string>();
         private bool isDragging = false;
@@ -61,10 +61,11 @@ namespace VideoPoker
                         {
                             if (draggedObject is Texture2D)
                             {
-                                Texture2D texture = draggedObject as Texture2D;
-                                Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);
-                                sprite.name = texture.name;
-                                imageSprites.Add(sprite);
+                                string imagePath = AssetDatabase.GetAssetPath(draggedObject);
+                                if (!string.IsNullOrEmpty(imagePath))
+                                {
+                                    imageFilePaths.Add(imagePath);
+                                }
                             }
                         }
                         isDragging = false;
@@ -77,14 +78,24 @@ namespace VideoPoker
             CreateDictGUI();
 
             // Display loaded images
-            if (imageSprites.Count > 0)
+            if (imageFilePaths.Count > 0)
             {
                 GUILayout.Label("Images Loaded:", EditorStyles.boldLabel);
                 EditorGUILayout.BeginHorizontal();
                 int _counter = 0;
-                foreach (var sprite in imageSprites)
+
+                Sprite imageSprite;
+
+                foreach (string sprite in imageFilePaths)
                 {
-                    GUILayout.Label(sprite.texture, GUILayout.Width(50), GUILayout.Height(50));
+                    // Load Image Sprites for preview
+                    imageSprite = AssetDatabase.LoadAssetAtPath<Sprite>(sprite);
+                    if (imageSprite == null)
+                    {
+                        Debug.LogError("Image " + sprite + " not found!");
+                    }
+
+                    GUILayout.Label(imageSprite.texture, GUILayout.Width(50), GUILayout.Height(50));
                     _counter++;
 
                     if(_counter>=8)
@@ -97,14 +108,27 @@ namespace VideoPoker
                 EditorGUILayout.EndHorizontal();
             }
 
-            EditorGUI.BeginDisabledGroup(imageSprites.Count <= 0);
+            EditorGUI.BeginDisabledGroup(imageFilePaths.Count <= 0);
             if (GUILayout.Button("Create CardSO"))
             {
                 CreateCardSOs();
+
+            }
+
+            GUILayout.Space(10); // Space below drop area
+
+            if (GUILayout.Button("Clear Loaded Images"))
+            {
+                ResetImageList();
             }
 
             EditorGUI.EndDisabledGroup();
 
+        }
+
+        private void ResetImageList()
+        {
+            imageFilePaths = new List<string>();
         }
 
         private void CreateDictGUI()
@@ -153,16 +177,16 @@ namespace VideoPoker
 
         private void CreateCardSOs()
         {
-            foreach (var sprite in imageSprites)
+            foreach (string sprite in imageFilePaths)
             {
                 //Get File Name
-                string _filename = sprite.name;
+                string _filename = Path.GetFileNameWithoutExtension(sprite);
 
                 updateSuitDict();
 
                 // Create a new CardSO
                 CardSO card = CreateInstance<CardSO>();
-                card.img = sprite;
+                card.img = AssetDatabase.LoadAssetAtPath<Sprite>(sprite);
                 card.value = int.Parse(_filename.Substring(_filename.Length - 2));
                 card.isRoyal = card.value > 10;
                 card.suit = suitDictionary[_filename.Substring(_filename.Length - 3, 1)];
@@ -177,7 +201,7 @@ namespace VideoPoker
                 // Reset fields
                 imageName = "";
             }
-            imageSprites.Clear(); ;
+            imageFilePaths.Clear(); ;
         }
 
 
