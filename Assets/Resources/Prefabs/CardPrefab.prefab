@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4677759296469084340}
   - component: {fileID: 4677759296469084338}
   - component: {fileID: 4677759296469084339}
-  - component: {fileID: 982683635793274806}
+  - component: {fileID: 3449094745505426617}
   m_Layer: 5
   m_Name: CardPrefab
   m_TagString: Untagged
@@ -93,9 +93,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 982683635793274806}
+      - m_Target: {fileID: 3449094745505426617}
         m_TargetAssemblyTypeName: VideoPoker.Card, Assembly-CSharp
-        m_MethodName: ToggleHold
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -105,7 +105,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &982683635793274806
+--- !u!114 &3449094745505426617
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
