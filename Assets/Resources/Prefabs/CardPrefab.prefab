@@ -92,7 +92,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4677759297067671056}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 982683635793274806}
+        m_TargetAssemblyTypeName: VideoPoker.Card, Assembly-CSharp
+        m_MethodName: ToggleHold
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &982683635793274806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentCard: {fileID: 0}
   cardArt: {fileID: 4677759297067671056}
+  holdText: {fileID: 4677759297069796229}
 --- !u!1 &4677759297067671058
 GameObject:
   m_ObjectHideFlags: 0
