@@ -24,10 +24,34 @@ namespace VideoPoker
 
         }
 
-        public void ToggleHold()
+        public void ToggleHoldText()
         {
             holdText.SetActive(!holdText.activeInHierarchy);
 
+        }
+
+        public void SetHoldText(bool b)
+        {
+            holdText.SetActive(b);
+
+        }
+
+        public int GetValue()
+        {
+            return currentCard.value;
+        }
+        public bool IsRoyal()
+        {
+            return currentCard.isRoyal;
+        }
+        public Suit GetSuit()
+        {
+            return currentCard.suit;
+        }
+
+        public void SetCurrentCard(CardSO cso)
+        {
+            currentCard = cso;
         }
     }
 }
