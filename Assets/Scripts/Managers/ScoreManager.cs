@@ -40,7 +40,6 @@ namespace VideoPoker
             scoringItems = new List<ScoringItem>();
             InitializeScoringItems();
             DisplayBalance();
-            gameManager.SetWinText("Choose Cards to hold or toss!");
 
         }
 

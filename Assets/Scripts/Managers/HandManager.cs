@@ -14,11 +14,11 @@ namespace VideoPoker
         private List<Card> hand = null;
 
 
-        public void DrawHand()
+        public void DrawHand(bool hardReset = false)
         {
             foreach (Card card in hand)
             {
-                if (!card.IsHeld)
+                if (!card.IsHeld || hardReset)
                 {
                     CardSO so = gameManager.DrawCard();
                     card.SetCurrentCard(so);

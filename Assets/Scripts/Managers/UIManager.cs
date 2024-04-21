@@ -23,6 +23,13 @@ namespace VideoPoker
 		[SerializeField]
 		private Button betButton = null;
 
+		[SerializeField]
+		private Text betButtonText = null;
+
+		private bool isBetting = true;
+
+		private string CHOOSECARDSTOTOSS = "Choose Cards to hold or toss!";
+
 		//-//////////////////////////////////////////////////////////////////////
 		/// 
 		void Awake()
@@ -34,6 +41,7 @@ namespace VideoPoker
 		void Start()
 		{
 			betButton.onClick.AddListener(OnBetButtonPressed);
+			gameManager.SetWinText(CHOOSECARDSTOTOSS);
 		}
 
 		//-//////////////////////////////////////////////////////////////////////
@@ -42,7 +50,30 @@ namespace VideoPoker
 		/// 
 		private void OnBetButtonPressed()
 		{
-			gameManager.BetHand();
+			if (isBetting)
+            {
+				gameManager.BetHand();
+				betButtonText.text ="Next";
+
+			}
+			else
+            {
+				gameManager.DrawNewHand();
+				betButtonText.text = "Bet";
+				gameManager.SetWinText(CHOOSECARDSTOTOSS);
+
+			}
+		}
+
+		//-//////////////////////////////////////////////////////////////////////
+		///
+		/// Getters, Setters and Other Functions
+		///
+
+		public bool IsBetting
+		{
+			get { return isBetting; }
+			set { isBetting = value; }
 		}
 
 		public void SetWinText(string s)
@@ -54,5 +85,11 @@ namespace VideoPoker
 		{
 			currentBalanceText.text = s;
 		}
+
+		public void ToggleIsBetting()
+        {
+			isBetting = !isBetting;
+        }
+
 	}
 }
