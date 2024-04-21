@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +11,9 @@ namespace VideoPoker
         private int betCost = 5;
 
         [Header("Serialized Variables")]
+        [SerializeField]
+        private GameManager gameManager = null;
+
         [SerializeField]
         private List<ScoreSO> scoring = null;
         
@@ -44,10 +46,11 @@ namespace VideoPoker
         {
             foreach (Card card in hand)
             {
-                if (card.IsHeld)
+                if (!card.IsHeld)
                 {
-                    CardSO so = new CardSO();
+                    CardSO so = gameManager.DrawCard();
                     card.SetCurrentCard(so);
+                    card.InitializeCard();
                 }
             }
         }

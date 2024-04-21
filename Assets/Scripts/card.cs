@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +14,7 @@ namespace VideoPoker
         [SerializeField]
         private GameObject holdText = null;
 
-        private bool isHeld;
+        private bool isHeld = false;
 
         // Initializes card from SO
         public void InitializeCard()
