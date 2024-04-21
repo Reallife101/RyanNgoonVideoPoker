@@ -30,7 +30,7 @@ namespace VideoPoker
 			deck.InitializeDeck();
 			score.InitializeScore();
 			score.SubtractBet();
-			hand.BeginHand();
+			hand.DrawHand();
 		}
 
 		//-//////////////////////////////////////////////////////////////////////
@@ -46,7 +46,8 @@ namespace VideoPoker
 
 		public void BetHand()
         {
-			hand.BetHand();
+			hand.DrawHand();
+			score.ScoreHand(hand.Hand);
         }
 
 		public void EditScore(int delta)

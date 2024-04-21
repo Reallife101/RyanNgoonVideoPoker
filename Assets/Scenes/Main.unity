@@ -155,6 +155,7 @@ Transform:
   m_Children:
   - {fileID: 1818865735}
   - {fileID: 1993373412}
+  - {fileID: 1775865507}
   m_Father: {fileID: 370828693}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -172,6 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deck: {fileID: 1818865736}
   hand: {fileID: 1993373413}
+  score: {fileID: 1775865508}
 --- !u!1 &47225193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,6 +1862,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640537733}
   m_CullTransparentMesh: 0
+--- !u!1 &1775865506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1775865507}
+  - component: {fileID: 1775865508}
+  m_Layer: 0
+  m_Name: Score Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1775865507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775865506}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 16242223}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1775865508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1775865506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65cd92f4f436aeb4ca84a7a54d5ce9c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startBalance: 200
+  BetCost: 5
 --- !u!1 &1818865734
 GameObject:
   m_ObjectHideFlags: 0
@@ -2001,16 +2049,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a82fd38de4d714942b861c07ae2a8f3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  betCost: 5
   gameManager: {fileID: 16242224}
-  scoring: []
   hand:
   - {fileID: 894209017}
   - {fileID: 1405463898}
   - {fileID: 1290637259}
   - {fileID: 1487786925}
   - {fileID: 1596305072}
-  currentBalance: 200
 --- !u!1 &2059772537
 GameObject:
   m_ObjectHideFlags: 0

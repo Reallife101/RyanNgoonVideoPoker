@@ -13,14 +13,8 @@ namespace VideoPoker
         [SerializeField]
         private List<Card> hand = null;
 
-        // Starts the Round
-        public void BeginHand()
-        {
-            DrawHand();
-        }
 
-
-        private void DrawHand()
+        public void DrawHand()
         {
             foreach (Card card in hand)
             {
@@ -33,17 +27,11 @@ namespace VideoPoker
             }
         }
 
-        // Click Bet
-        public void BetHand()
+        public List<Card> Hand
         {
-            DrawHand();
-            ScoreHand();
+            get { return hand; }
         }
 
-        private void ScoreHand()
-        {
-
-        }
     }
 }
 
