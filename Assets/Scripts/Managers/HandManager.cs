@@ -6,43 +6,15 @@ namespace VideoPoker
 {
     public class HandManager : MonoBehaviour
     {
-        [Header("Hand Settings")]
-        [SerializeField]
-        private int betCost = 5;
-
         [Header("Serialized Variables")]
         [SerializeField]
         private GameManager gameManager = null;
-
-        [SerializeField]
-        private List<ScoreSO> scoring = null;
         
         [SerializeField]
         private List<Card> hand = null;
 
-        [SerializeField]
-        private int currentBalance = 200;
 
-        // Establish Getters and Setters
-        public int CurrentBalance
-        {
-            get { return currentBalance; }
-            set { currentBalance = value; }
-        }
-
-        // Starts the Round
-        public void BeginHand()
-        {
-            SubtractBet();
-            DrawHand();
-        }
-
-        private void SubtractBet()
-        {
-            currentBalance -= betCost;
-        }
-
-        private void DrawHand()
+        public void DrawHand()
         {
             foreach (Card card in hand)
             {
@@ -55,17 +27,11 @@ namespace VideoPoker
             }
         }
 
-        // Click Bet
-        public void BetHand()
+        public List<Card> Hand
         {
-            DrawHand();
-            ScoreHand();
+            get { return hand; }
         }
 
-        private void ScoreHand()
-        {
-
-        }
     }
 }
 

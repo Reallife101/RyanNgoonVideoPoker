@@ -13,6 +13,10 @@ namespace VideoPoker
 		private DeckManager deck = null;
 		[SerializeField]
 		private HandManager hand = null;
+		[SerializeField]
+		private ScoreManager score = null;
+		[SerializeField]
+		private UIManager ui = null;
 
 		//-//////////////////////////////////////////////////////////////////////
 		/// 
@@ -26,7 +30,9 @@ namespace VideoPoker
 		void Start()
 		{
 			deck.InitializeDeck();
-			hand.BeginHand();
+			score.InitializeScore();
+			score.SubtractBet();
+			hand.DrawHand();
 		}
 
 		//-//////////////////////////////////////////////////////////////////////
@@ -42,7 +48,23 @@ namespace VideoPoker
 
 		public void BetHand()
         {
-			hand.BetHand();
+			hand.DrawHand();
+			score.ScoreHand(hand.Hand);
         }
+
+		public void EditScore(int delta)
+        {
+			score.CurrentBalance += delta;
+        }
+
+		public void SetWinText(string s)
+        {
+			ui.SetWinText(s);
+        }
+
+		public void SetBalanceText(string s)
+		{
+			ui.SetBalanceText(s);
+		}
 	}
 }
