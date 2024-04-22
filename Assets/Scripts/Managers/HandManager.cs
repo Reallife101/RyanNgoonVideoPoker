@@ -32,6 +32,12 @@ namespace VideoPoker
             get { return hand; }
         }
 
+        public void setCardSOAtIndex(int i, CardSO c)
+        {
+            hand[i].SetCurrentCard(c);
+            hand[i].InitializeCard();
+        }
+
     }
 }
 
