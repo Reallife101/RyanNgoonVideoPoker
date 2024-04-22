@@ -17,6 +17,7 @@ namespace VideoPoker
             ShuffleDeck();
         }
 
+        // Draw a card from the Deck, shuffling the deck if none are left
         public CardSO drawCard()
         {
             if (deckIndex >= cards.Count)

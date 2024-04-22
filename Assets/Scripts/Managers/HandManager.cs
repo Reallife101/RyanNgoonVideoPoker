@@ -14,6 +14,8 @@ namespace VideoPoker
         private List<Card> hand = null;
 
 
+        // For every card in hand, draw a new card
+        // if no hard rest, only replace non held cards
         public void DrawHand(bool hardReset = false)
         {
             foreach (Card card in hand)
@@ -27,17 +29,20 @@ namespace VideoPoker
             }
         }
 
-        public List<Card> Hand
-        {
-            get { return hand; }
-        }
-
+        // Given a CardSO, set a card at index and initialize it
         public void setCardSOAtIndex(int i, CardSO c)
         {
             hand[i].SetCurrentCard(c);
             hand[i].InitializeCard();
         }
 
+        //-//////////////////////////////////////////////////////////////////////
+        /// Establish Getters and Setters
+        /// -//////////////////////////////////////////////////////////////////////
+        public List<Card> Hand
+        {
+            get { return hand; }
+        }
     }
 }
 

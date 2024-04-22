@@ -28,6 +28,7 @@ namespace VideoPoker
         public void ToggleHeld()
         {
             // Reasoning: We should never hold a card and not display the text, since it is miscommunication to the player
+            // There is a really good argument it should ask UI Manager to update the text, but given the above logic, I currently elect the small optimization
             isHeld = !isHeld;
             holdText.SetActive(!holdText.activeInHierarchy);
 
@@ -39,6 +40,10 @@ namespace VideoPoker
             isHeld = b;
 
         }
+
+        //-//////////////////////////////////////////////////////////////////////
+        /// Establish Getters and Setters
+        /// -//////////////////////////////////////////////////////////////////////
 
         public int GetValue()
         {
@@ -57,8 +62,6 @@ namespace VideoPoker
         {
             currentCard = cso;
         }
-
-        // Establish Getters
         public bool IsHeld
         {
             get { return isHeld; }

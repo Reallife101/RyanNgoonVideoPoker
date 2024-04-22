@@ -79,7 +79,7 @@ namespace VideoPoker
             List<Suit> _suits = new List<Suit>();
             Dictionary<int, int> _valueCounts = new Dictionary<int, int>();
 
-
+            // Establish frequency table to score counts
             foreach (Card card in hand)
             {
                 int _currentVal = card.GetValue();
@@ -114,6 +114,10 @@ namespace VideoPoker
             
             gameManager.SetWinText(s);
         }
+
+        //-//////////////////////////////////////////////////////////////////////
+        /// Establish All Scoring Functions
+        /// -//////////////////////////////////////////////////////////////////////
 
         private bool IsRoyalFlush(List<int> values, List<Suit> suits, Dictionary<int, int> valueCounts)
         {

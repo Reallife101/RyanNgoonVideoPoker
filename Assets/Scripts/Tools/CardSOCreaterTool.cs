@@ -1,14 +1,13 @@
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
 
 namespace VideoPoker
 {
-    using UnityEngine;
-    using UnityEditor;
 
     public class CardSOCreaterTool : EditorWindow
     {
-        private string imageName = "";
 
         private Dictionary<string, Suit> suitDictionary = new Dictionary<string, Suit>()
         {
@@ -24,7 +23,6 @@ namespace VideoPoker
         private List<string> imageFilePaths = new List<string>();
         private List<int> selectedSuitIndexList = new List<int>();
         private List<string> selectedKeyList = new List<string>();
-        private bool isDragging = false;
 
         [MenuItem("Tools/Create CardSO")]
         public static void ShowWindow()
@@ -68,7 +66,7 @@ namespace VideoPoker
                                 }
                             }
                         }
-                        isDragging = false;
+                        
                     }
                     break;
             }
@@ -198,8 +196,6 @@ namespace VideoPoker
 
                 Debug.Log("CardSO created: " + path);
 
-                // Reset fields
-                imageName = "";
             }
             imageFilePaths.Clear(); ;
         }
@@ -217,7 +213,7 @@ namespace VideoPoker
             suitDictionary = new Dictionary<string, Suit>();
 
             // Iterate through both lists and add key-value pairs to the dictionary
-            // NOTE: THIS IS SLOW. UPDATE LATER
+            // NOTE: This is not the most optimal, can be improved
             for (int i = 0; i < selectedKeyList.Count; i++)
             {
 
