@@ -166,46 +166,35 @@ namespace VideoPoker
             return true;
 
         }
-        
-        private bool IsFourOfKind(List<int> values, List<Suit> suits, Dictionary<int, int> valueCounts)
+
+        private bool IsNOfAKind(int n, Dictionary<int, int> valueCounts)
         {
             foreach (var count in valueCounts.Values)
             {
-                if (count == 4)
+                if (count == n)
                 {
                     return true;
                 }
             }
 
             return false;
+        }
+        
+        private bool IsFourOfKind(List<int> values, List<Suit> suits, Dictionary<int, int> valueCounts)
+        {
+            return IsNOfAKind(4, valueCounts);
 
         }
         
         private bool IsThreeOfKind(List<int> values, List<Suit> suits, Dictionary<int, int> valueCounts)
         {
-            foreach (var count in valueCounts.Values)
-            {
-                if (count == 3)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return IsNOfAKind(3, valueCounts);
 
         }
 
         private bool IsPair(List<int> values, List<Suit> suits, Dictionary<int, int> valueCounts)
         {
-            foreach (var count in valueCounts.Values)
-            {
-                if (count == 2)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return IsNOfAKind(2, valueCounts);
 
         }
 
